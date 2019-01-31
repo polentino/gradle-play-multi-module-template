@@ -1,0 +1,25 @@
+plugins {
+    id "scala"
+}
+
+dependencies {
+    implementation project(":api")
+    implementation project(":lib_one")
+    implementation "org.scala-lang:scala-library:${scalaFullVersion}"
+
+    testImplementation "org.scalatest:scalatest_${scalaCompatVersion}:${scalaTestVersion}"
+    testImplementation "junit:junit:${junitVersion}"
+}
+
+repositories {
+    jcenter()
+    maven {
+        name "lightbend-maven-release"
+        url "https://repo.lightbend.com/lightbend/maven-releases"
+    }
+    ivy {
+        name "lightbend-ivy-release"
+        url "https://repo.lightbend.com/lightbend/ivy-releases"
+        layout "ivy"
+    }
+}

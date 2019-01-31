@@ -1,0 +1,59 @@
+plugins {
+    id "play"
+    id "scala"
+}
+
+sourceSets {
+    main {
+        scala {
+            srcDirs += ["app"]
+        }
+    }
+    test {
+        scala {
+            srcDirs += ["test"]
+        }
+    }
+}
+
+dependencies {
+    implementation "org.scala-lang:scala-library:${scalaFullVersion}"
+    implementation "com.typesafe.play:play_${scalaCompatVersion}:${playVersion}"
+    implementation "com.google.inject:guice:${guiceVersion}"
+    implementation "com.google.inject.extensions:guice-multibindings:${guiceVersion}"
+    implementation "org.reflections:reflections:${reflectionsVersion}"
+    implementation project(":api")
+
+    play "com.google.inject.extensions:guice-multibindings:${guiceVersion}"
+    play "org.reflections:reflections:${reflectionsVersion}"
+    play project(":api")
+    play project(":lib_one")
+    play project(":lib_two")
+
+    testImplementation "org.scalatest:scalatest_${scalaCompatVersion}:${scalaTestVersion}"
+    testImplementation "junit:junit:${junitVersion}"
+    testImplementation "com.typesafe.play:play_${scalaCompatVersion}:${playVersion}"
+    testImplementation "com.google.inject:guice:${guiceVersion}"
+}
+
+model {
+    components {
+        play {
+            platform play: '2.5.8', scala: '2.11'
+            injectedRoutesGenerator = true
+        }
+    }
+}
+
+repositories {
+    jcenter()
+    maven {
+        name "lightbend-maven-release"
+        url "https://repo.lightbend.com/lightbend/maven-releases"
+    }
+    ivy {
+        name "lightbend-ivy-release"
+        url "https://repo.lightbend.com/lightbend/ivy-releases"
+        layout "ivy"
+    }
+}
